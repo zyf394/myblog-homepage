@@ -1,7 +1,3 @@
-# y
-
-> y
-
 ## Build Setup
 
 ``` bash
