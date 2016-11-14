@@ -1,19 +1,21 @@
 <template>
+ <div>
   <nav class="mobile-bar iconfont">
     <i v-on:click="showMenu">&#xe624;</i>
   </nav>
   <ul v-bind:class="['mobile-nav-list',menuOpen ? '' : 'expand']">
     <li v-for="item in menu" v-on:click="routeOut">
-      <a v-link="{ path: item.href }" ><i class="{{'iconfont ' + item.icon}}"></i>{{item.name}}</a>
+      <router-link :to="{ path: item.href }" ><i class="iconfont" v-bind:class="item.icon"></i>{{item.name}}</router-link>
     </li>
   </ul>
   <nav class="menu" >
     <ul>
       <li v-for="item in menu">
-        <a v-link="{ path: item.href }" ><i class="{{'iconfont ' + item.icon}}"></i>{{item.name}}</a>
+      <router-link :to="{ path: item.href }" ><i class="iconfont" v-bind:class="item.icon"></i>{{item.name}}</router-link>
       </li>
     </ul>
   </nav>
+ </div>
 </template>
 
 <script>
@@ -51,26 +53,27 @@
         this.menuOpen = false
       }
     },
-    ready () {
-      var me = this
-      // var navList = document.querySelector('.mobile-nav-list')
-      var navSwitchBtn = document.querySelector('.mobile-bar > i')
-      document.addEventListener('click', function (event) {
-        var target = event.target
-        // var eventPath = event.path
-        var isInNavList = true
-        var isNavSwitchBtn = target === navSwitchBtn
-        while (target.className.indexOf('mobile-nav-list') === -1) {
-          target = target.parentNode
-          isInNavList = false
-          if (target === document) {
-            break
+    mounted () {
+      this.$nextTick(function () {
+        // var navList = document.querySelector('.mobile-nav-list')
+        var navSwitchBtn = document.querySelector('.mobile-bar > i')
+        document.addEventListener('click', function (event) {
+          var target = event.target
+          // var eventPath = event.path
+          var isInNavList = true
+          var isNavSwitchBtn = target === navSwitchBtn
+          while (target && target.className.indexOf('mobile-nav-list') === -1) {
+            target = target.parentNode
+            isInNavList = false
+            if (target === document) {
+              break
+            }
           }
-        }
-        console.log(isInNavList)
-        if (!isInNavList && !isNavSwitchBtn) {
-          me.menuOpen = false
-        }
+
+          if (!isInNavList && !isNavSwitchBtn) {
+            this.menuOpen = false
+          }
+        })
       })
     }
   }
@@ -162,7 +165,7 @@
 
       /* .expand-enter 定义进入的开始状态 */
       /* .expand-leave 定义离开的结束状态 */
-      &.expand-enter, &.expand-leave {
+      &.expand-enter, &.expand-leave-active {
         transform: translateX(-100%);
       }
 

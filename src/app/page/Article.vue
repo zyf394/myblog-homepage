@@ -59,10 +59,11 @@
         return converter.makeHtml(markedContent)
       }
     },
-    ready: function () {
-      let me = this
-      let id = me.$route.params.id
-      id && me.getArticles(Number(id))
+    mounted: function () {
+      this.$nextTick(() => {
+        let id = this.$route.params.id
+        id && this.getArticles(Number(id))
+      })
     }
   }
 </script>

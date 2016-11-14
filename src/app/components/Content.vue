@@ -1,12 +1,12 @@
 <template>
-  <div class="blog-content">
-    <article class="content-box" v-for="item in articles">
+  <div class="blog-content" >
+    <article class="content-box" v-for="(item, index) in articles">
       <h1 class="list-title">
-        <a v-link="'/article/' + item.id">{{item.title || ''}}</a>
+        <router-link :to="'article/' + item.id">{{item.title || ''}}</router-link>
       </h1>
       <div class="wrap">
-        <p class="article-summary" v-html="markedContent($index)"></p>
-        <a class="article-arrow" v-if="item.id" v-link="'/article/' + item.id">&gt;&gt;</a>
+        <p class="article-summary" v-html="markedContent(index)"></p>
+        <router-link :to="'article/' + item.id" v-if="item.id" class="article-arrow">&gt;&gt;</router-link>
         <p v-if="item.id" class="article-info">
           <i class="iconfont icon-01"></i>
           {{item.author}}
@@ -17,7 +17,7 @@
     <load-more-component
       :loading="loading"
       :nomore="nomore"
-      v-on:click="getArticles"></load-more-component>
+      @show-more="getArticles"></load-more-component>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -69,18 +69,20 @@
           )
         }
       },
-      markedContent: function ($index) {
+      markedContent: function (index) {
         var me = this
         var converter = new showdown.Converter({tables: true})
-        var markedContent = me.articles[$index].content || ''
+        var markedContent = me.articles[index].content || ''
         return me.delHtmlTag(converter.makeHtml(markedContent))
       },
       delHtmlTag: function (str) { // 去掉所有的html标记
         return str.replace(/<[^>]+>/g, '')
       }
     },
-    ready: function () {
-      this.getArticles()
+    mounted: function () {
+      this.$nextTick(() => {
+        this.getArticles()
+      })
     }
   }
 </script>

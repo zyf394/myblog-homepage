@@ -1,5 +1,6 @@
 <template>
-  <button v-bind:class="[loading ? 'loading' :'', nomore ? 'no-more' : '']">
+  <button :class="{'loading': loading, 'no-more' : nomore}"
+          @click="clickHandler">
     <span>{{nomore ? '没有更多文章了' : (loading ? '加载中...' : '点击加载更多')}}</span>
   </button>
 </template>
@@ -32,6 +33,8 @@
   }
 </style>
 <script>
+  const EVENT_SHOW_MORE = 'show-more'
+
   export default{
     props: {
       loading: {
@@ -41,6 +44,11 @@
       nomore: {
         type: Boolean,
         default: false
+      }
+    },
+    methods: {
+      clickHandler () {
+        this.$emit(EVENT_SHOW_MORE)
       }
     }
   }

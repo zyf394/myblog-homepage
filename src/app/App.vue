@@ -16,8 +16,10 @@
       MenuComponent,
       FooterComponent
     },
-    ready () {
-      FastClick.attach(document.body, {})
+    mounted () {
+      this.$nextTick(() => {
+        FastClick.attach(document.body, {})
+      })
     }
   }
 </script>

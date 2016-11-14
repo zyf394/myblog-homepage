@@ -1,6 +1,8 @@
 <template>
+<div>
     <header-component></header-component>
     <content-component></content-component>
+</div>
 </template>
 <script type="text/ecmascript-6">
   import HeaderComponent from '../components/Header'
