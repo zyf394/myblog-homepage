@@ -30,11 +30,15 @@
       }
     },
     watch: {
-      'article.content': function (val, oldVal) {
+      'article.content' (val, oldVal) {
         var codeEles = document.querySelectorAll('pre code')
         for (var i = 0; i < codeEles.length; i++) {
           hljs.highlightBlock(codeEles[i])
         }
+      },
+      '$route' (to, from) {
+        let id = to.params.id
+        id && this.getArticles(Number(id))
       }
     },
     methods: {
@@ -44,19 +48,27 @@
           var resData = response.data
           if (resData.length) {
             me.article = response.data[0]
+            me.changeTitle(me.article)
+            me.changeDescript(me.article)
           } else {
             this.hasArticle = false
           }
         }, (err) => {
           console.log(err)
-        }
-        )
+        })
       },
-      markedContent: function () {
+      markedContent () {
         var me = this
         var converter = new showdown.Converter({tables: true})
         var markedContent = me.article.content || ''
         return converter.makeHtml(markedContent)
+      },
+      changeTitle (data) {
+        document.title = data.title
+      },
+      changeDescript (data) {
+        let desc = document.querySelector('meta[name="description"]')
+        desc.content = data.content.substring(0, 50)
       }
     },
     mounted: function () {

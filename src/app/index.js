@@ -14,10 +14,10 @@ Vue.filter('formatTime', function (value) {
 
 const router = new VueRouter({
   routes: configRouter,
-  history: false
+  mode: 'history'
 })
 
 const MyBlog = Vue.extend(App)
 new MyBlog({ router }).$mount('#root')
-console.log(MyBlog)
+
 window.router = router
