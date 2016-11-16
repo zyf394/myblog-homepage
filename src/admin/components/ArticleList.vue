@@ -56,7 +56,7 @@
     },
     methods: {
       jumpToEdit: function (id) {
-        window.router.go('/edit/' + id)
+        window.router.push('/edit/' + id)
       },
       addCurrentClass (event) {
         var currentTarget = event.currentTarget

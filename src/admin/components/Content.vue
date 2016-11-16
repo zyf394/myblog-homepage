@@ -50,7 +50,8 @@
     },
     watch: {
       'article.content': function (val, oldVal) {
-        document.querySelectorAll('pre code').forEach(block => {
+        var codes = Array.from(document.querySelectorAll('pre code'))
+        codes.forEach(block => {
           hljs.highlightBlock(block)
         })
       }
