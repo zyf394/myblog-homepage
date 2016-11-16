@@ -162,7 +162,7 @@
         }
       }
     },
-    ready: function () {
+    mounted: function () {
       let me = this
       let id = me.$route.params.id
       id && me.getArticles(Number(id))

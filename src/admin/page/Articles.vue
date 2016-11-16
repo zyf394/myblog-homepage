@@ -6,7 +6,7 @@
   export default{
     data () {
       return {
-        articles: [1]
+        articles: [{}]
       }
     },
     components: {
@@ -24,7 +24,7 @@
         )
       }
     },
-    created: function () {
+    mounted: function () {
       this.getArticles()
     }
   }

@@ -8,11 +8,10 @@ Vue.use(VueRouter)
 Vue.use(VueResource)
 
 const router = new VueRouter({
-  routes: configRouter,
-  history: false
+  routes: configRouter
 })
 
-const app = new Vue({ router }).extend(Admin).$mount('#root')
-console.log(app)
+const MyBlogAdimn = Vue.extend(Admin)
+new MyBlogAdimn({ router }).$mount('#root')
 
 window.router = router

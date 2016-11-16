@@ -7,10 +7,10 @@
       </div>
     </header>
     <ul>
-      <li v-for="item in navBarList"
-          v-on:click="addCurrentClass($index)"
+      <li v-for="(item, index) in navBarList"
+          v-on:click="addCurrentClass(index)"
           v-bind:class="item.current ? 'current' : ''">
-        <a v-link="{ path: item.href }" ><i class="{{'iconfont ' + item.icon}}"></i>{{item.name}}</a>
+        <router-link :to="{ path: item.href }" ><i class="iconfont" v-bind:class="item.icon"></i>{{item.name}}</router-link>
       </li>
     </ul>
   </nav>

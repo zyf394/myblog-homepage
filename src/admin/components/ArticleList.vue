@@ -5,7 +5,7 @@
         <li v-for="item in articles"
             v-bind:class="[item.id == $route.params.id ? 'current' : '']"
             v-on:click="addCurrentClass" >
-          <a v-link="'/articles/' + item.id">
+          <router-link :to="'/articles/' + item.id">
             <section>
               <h3 class="article-title">{{item.title}}</h3>
               <p class="article-author ">
@@ -17,7 +17,7 @@
                 {{item.status === 1 ? '草稿' : '发布'}}
               </span>
             </section>
-          </a>
+          </router-link>
         </li>
       </ul>
     </section>
@@ -48,7 +48,8 @@
     },
     watch: {
       'articles': function (val, oldVal) {
-        document.querySelectorAll('pre code').forEach(block => {
+        var codes = Array.from(document.querySelectorAll('pre code'))
+        codes.forEach(block => {
           hljs.highlightBlock(block)
         })
       }
