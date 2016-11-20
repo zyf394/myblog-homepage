@@ -22,7 +22,7 @@ export default [
     component: Article
   },
   {
-    path: '/*',
+    path: '*',
     component: Profile
   }
 ]
