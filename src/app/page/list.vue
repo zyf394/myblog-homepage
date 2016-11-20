@@ -38,11 +38,12 @@
 <style rel="stylesheet/less" type="text/css" lang="less" scoped>
   .blog-list{
     width: 80%;
+    max-width: 720px;
     margin: 0 auto;
   }
   .blog-list-wrap {
     font-family: 'HanHei SC', 'PingFang SC', 'Helvetica Neue Thin', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
-    font-weight: 100;
+    font-weight: 200;
     h3 {
       padding-top: 1rem;
       color: #ccc;

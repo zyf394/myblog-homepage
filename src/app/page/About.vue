@@ -53,7 +53,7 @@
 }
 .me-info{
   position: relative;
-  font-weight: 100;
+  font-weight: 200;
   color: #ccc;
 
   &::after{

@@ -120,7 +120,7 @@
       article{
         padding: 0.5rem 0.2rem;
         font-family: 'HanHei SC', 'PingFang SC', 'Helvetica Neue Thin', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
-        font-weight: 100;
+        font-weight: 200;
         color: #666;
 
       }
