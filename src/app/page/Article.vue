@@ -5,7 +5,7 @@
       <header>
         <h1 class="article-title">{{article.title}}</h1>
         <p class="article-info" v-if="article.title">
-          <i class="iconfont icon-01"></i>{{article.author}}
+          <i class="iconfont icon-01"></i><router-link :to="'/about/'">{{article.author}}</router-link>
           <time class="iconfont icon-06"></time>{{article.publishTime | formatTime}}
         </p>
       </header>

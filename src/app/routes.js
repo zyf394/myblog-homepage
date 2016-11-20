@@ -2,6 +2,7 @@ import Home from './page/Home'
 import Profile from './page/Profile'
 import About from './page/About'
 import Article from './page/Article'
+import List from './page/List'
 
 export default [
   {
@@ -9,8 +10,8 @@ export default [
     component: Home
   },
   {
-    path: '/profile',
-    component: Profile
+    path: '/list',
+    component: List
   },
   {
     path: '/about',
@@ -19,5 +20,9 @@ export default [
   {
     path: '/article/:id',
     component: Article
+  },
+  {
+    path: '/*',
+    component: Profile
   }
 ]

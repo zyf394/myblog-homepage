@@ -88,7 +88,7 @@
             content: article.content,
             status: article.status
           }
-          !me.$route.params.id && window.router.go('/edit/' + article.id) // 添加文章后跳转到编辑文章页
+          !me.$route.params.id && window.router.push('/edit/' + article.id) // 添加文章后跳转到编辑文章页
         }, (err) => {
           console.log(err)
         })
@@ -116,7 +116,7 @@
         this.$http.post('/api/article/del', postData).then((response) => {
           var resData = response.data
           if (resData.errno === 0) {
-            window.router.go('/articles')
+            window.router.push('/articles')
           }
         }, (err) => {
           console.log(err)
@@ -126,6 +126,7 @@
         var me = this
         this.$http.post('/api/article/index', {id: id}).then((response) => {
           var article = response.data[0]
+          if (!article) return
           me.article = {
             id: article.id,
             title: article.title,

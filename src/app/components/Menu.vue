@@ -2,6 +2,7 @@
  <div>
   <nav class="mobile-bar iconfont">
     <i v-on:click="showMenu">&#xe624;</i>
+    <h1 v-show="!isIndex">Shuiyi's Blog</h1>
   </nav>
   <ul v-bind:class="['mobile-nav-list',menuOpen ? '' : 'expand']">
     <li v-for="item in menu" v-on:click="routeOut">
@@ -26,9 +27,9 @@
       href: '/'
     },
     {
-      name: 'Profile',
-      icon: 'icon-60',
-      href: '/profile'
+      name: 'List',
+      icon: 'icon-67',
+      href: '/list'
     },
     {
       name: 'About',
@@ -42,7 +43,13 @@
       return {
         menu: menu,
         menuClass: 'menu',
-        menuOpen: false
+        menuOpen: false,
+        isIndex: window.location.pathname === '/'
+      }
+    },
+    watch: {
+      '$route' (to, from) {
+        this.isIndex = to.path === '/'
       }
     },
     methods: {
@@ -130,16 +137,32 @@
       display: block;
       position: relative;
       height: 3rem;
-      z-index: 2;
-      padding: 0.5rem 1rem;
+      z-index: 3;
       width: 100%;
       box-shadow: 0 0 4px rgba(0,0,0,0.25);
+      text-align: center;
+      position: relative;
 
       i{
+        position: absolute;
+        left: 1.5rem;
+        top: 50%;
         display: inline-block;
         padding: 0.5rem 0;
         font-style: normal;
         color: #b8b8b8;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+
+      }
+      h1{
+        display: inline-block;
+        line-height: 3rem;
+        color: #308ddf;
+        font-weight: 100;
+        text-align: center;
+        font-family: "Helvetica Neue", Helvetica, 'Source Sans Pro',  Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
       }
     }
     .mobile-nav-list{
@@ -147,7 +170,7 @@
       position: absolute;
       top: 3rem;
       flex-flow: column nowrap;
-      z-index: 1;
+      z-index: 2;
       width: 50%;
       height: 100%;
       padding: 0 0.6rem 0.6rem;
