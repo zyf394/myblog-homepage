@@ -10,12 +10,16 @@
         </p>
       </header>
       <article class="markdown-body" v-html="markedContent()"></article>
+      <div id="duoshuo-comment">
+        <comment-component :article="article"></comment-component>
+      </div>
     </div>
   </main>
 </template>
 <script type="text/ecmascript-6">
   import showdown from 'showdown'
   import hljs from 'highlight.js'
+  import CommentComponent from '../components/Comment'
 
   export default{
     data () {
@@ -28,6 +32,9 @@
         },
         hasArticle: true
       }
+    },
+    components: {
+      CommentComponent
     },
     watch: {
       'article.content' (val, oldVal) {
