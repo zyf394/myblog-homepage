@@ -38,10 +38,7 @@
     },
     watch: {
       'article.content' (val, oldVal) {
-        var codeEles = document.querySelectorAll('pre code')
-        for (var i = 0; i < codeEles.length; i++) {
-          hljs.highlightBlock(codeEles[i])
-        }
+        this.highlightCodes()
       },
       '$route' (to, from) {
         let id = to.params.id
@@ -58,11 +55,17 @@
             me.changeTitle(me.article)
             me.changeDescript(me.article)
           } else {
-            this.hasArticle = false
+            me.hasArticle = false
           }
         }, (err) => {
           console.log(err)
         })
+      },
+      highlightCodes () {
+        var codeEles = document.querySelectorAll('pre code')
+        for (var i = 0; i < codeEles.length; i++) {
+          hljs.highlightBlock(codeEles[i])
+        }
       },
       markedContent () {
         var me = this
@@ -77,6 +80,9 @@
         let desc = document.querySelector('meta[name="description"]')
         desc.content = data.content.substring(0, 50)
       }
+    },
+    updated () {
+      this.highlightCodes()
     },
     mounted: function () {
       this.$nextTick(() => {
