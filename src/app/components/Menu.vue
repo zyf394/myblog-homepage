@@ -1,15 +1,17 @@
 <template>
  <div>
-  <nav class="mobile-bar iconfont">
-    <i v-on:click="showMenu">&#xe624;</i>
+  <nav class="mobile-bar iconfont" >
+    <i @click="toggleMenu">&#xe624;</i>
     <h1 v-show="!isIndex">Shuiyi's Blog</h1>
   </nav>
-  <div v-bind:class="['mobile-nav-list',menuOpen ? '' : 'expand']" v-on:touchmove.prevent>
-    <ul >
-      <li v-for="item in menu" v-on:click="routeOut">
+  <div v-bind:class="['mobile-nav-list',menuOpen ? '' : 'expand']" 
+      v-on:touchmove.prevent>
+    <ul class="mobile-nav-list-wrap">
+      <li class="js-routeOut" v-for="item in menu">
         <router-link :to="{ path: item.href }" ><i class="iconfont" v-bind:class="item.icon"></i>{{item.name}}</router-link>
       </li>
     </ul>
+    <div class="mobile-nav-list-wall" v-on:click="hideMenu"></div>
   </div>
   <nav class="menu" >
     <ul>
@@ -52,36 +54,28 @@
     watch: {
       '$route' (to, from) {
         this.isIndex = to.path === '/'
+        this.hideMenu()
       }
     },
     methods: {
       showMenu: function (event) {
-        this.menuOpen = !this.menuOpen
+        this.menuOpen = true
       },
-      routeOut: function () {
+      hideMenu: function (event) {
         this.menuOpen = false
+      },
+      toggleMenu: function () {
+        this.menuOpen = !this.menuOpen
       }
     },
     mounted () {
       this.$nextTick(function () {
         // var navList = document.querySelector('.mobile-nav-list')
-        var navSwitchBtn = document.querySelector('.mobile-bar > i')
+        // var navSwitchBtn = document.querySelector('.mobile-bar > i')
         document.addEventListener('click', function (event) {
-          var target = event.target
+          // var target = event.target
           // var eventPath = event.path
-          var isInNavList = true
-          var isNavSwitchBtn = target === navSwitchBtn
-          while (target && target.className.indexOf('mobile-nav-list') === -1) {
-            target = target.parentNode
-            isInNavList = false
-            if (target === document) {
-              break
-            }
-          }
-
-          if (!isInNavList && !isNavSwitchBtn) {
-            this.menuOpen = false
-          }
+          // var isNavSwitchBtn = target === navSwitchBtn
         })
       })
     }
@@ -176,7 +170,6 @@
       width: 100%;
       height: 100%;
 
-      background:rgba(0, 0, 0, 0.2);
       box-shadow: none;
 
       transform: translateX(0%);
@@ -194,7 +187,9 @@
       }
 
 
-      ul{
+      .mobile-nav-list-wrap{
+        position: absolute;
+        z-index: 1;
         width: 50%;
         height: 100%;
         padding: 0 0.6rem 0.6rem;
@@ -219,7 +214,14 @@
           }
         }
       }
-
+      .mobile-nav-list-wall{
+        position: absolute;
+        top: 0;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        background:rgba(0, 0, 0, 0.2);
+      }
     }
 
     .menu{

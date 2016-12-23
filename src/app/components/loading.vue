@@ -23,7 +23,7 @@ export default {
 </script>
 <style lang="less">
   #blog-loading{
-    position: absolute;
+    position: fixed;
     top: 0;
     background: rgba(0,0,0,0.2);
     height: 100%;
