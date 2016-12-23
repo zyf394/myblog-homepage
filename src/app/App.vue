@@ -3,18 +3,20 @@
     <menu-component></menu-component>
     <router-view></router-view>
     <footer-component></footer-component>
+    <loading-component></loading-component>
   </div>
 </template>
 
 <script>
   import MenuComponent from './components/Menu'
   import FooterComponent from './components/Footer'
+  import LoadingComponent from './components/Loading'
   import FastClick from 'fastclick'
-
   export default {
     components: {
       MenuComponent,
-      FooterComponent
+      FooterComponent,
+      LoadingComponent
     },
     mounted () {
       this.$nextTick(() => {

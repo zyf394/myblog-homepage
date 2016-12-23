@@ -10,27 +10,18 @@
   </div>
 </template>
 <script>
-  const ICONS = {
-    GITHUB: {
-      icon: 'icon-github',
-      link: 'https://github.com/zyf394'
-    },
-    WEIBO: {
-      icon: 'icon-unie61d',
-      link: 'http://weibo.com/1701938860/profile?topnav=1&wvr=6'
-    },
-    EMAIL: {
-      icon: 'icon-youxiang',
-      link: 'mailto:78524427@qq.com'
-    }
-  }
+  import { mapState, mapMutations } from 'vuex'
 
   export default{
-    data () {
-      return {
-        msg: 'hello vue',
-        icons: ICONS
-      }
+    computed: mapState({
+      icons: state => state.ABOUT.icons
+    }),
+    methods: mapMutations({
+      LOADING_COMPONENT_SHOW: 'LOADING_COMPONENT_SHOW',
+      LOADING_COMPONENT_HIDE: 'LOADING_COMPONENT_HIDE'
+    }),
+    mounted () {
+      this.LOADING_COMPONENT_HIDE()
     }
   }
 </script>

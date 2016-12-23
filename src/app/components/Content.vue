@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-content" >
+  <div class="blog-content">
     <article class="content-box" v-for="(item, index) in articles">
       <h1 class="list-title">
         <router-link :to="'article/' + item.id">{{item.title || ''}}</router-link>
@@ -23,6 +23,7 @@
 <script type="text/ecmascript-6">
   import showdown from 'showdown'
   import LoadMoreComponent from '../components/LoadMore'
+  import { mapState, mapActions, mapMutations } from 'vuex'
 
   export default {
     components: {
@@ -30,43 +31,43 @@
     },
     data () {
       return {
-        page: 1,
-        loading: false,
-        nomore: false,
-        articles: [{
-          item: '加载中...',
-          content: '加载中...'
-        }]
+        page: 1
       }
     },
+    computed: mapState({
+      articles: state => state.HOME.articleList,
+      loading: state => state.HOME.loading,
+      nomore: state => state.HOME.nomore
+    }),
     methods: {
+      ...mapMutations({
+        LOADING_COMPONENT_SHOW: 'LOADING_COMPONENT_SHOW',
+        LOADING_COMPONENT_HIDE: 'LOADING_COMPONENT_HIDE',
+        SHOW_BTN_LOADING: 'SHOW_BTN_LOADING',
+        SHWO_BTN_DISABLE: 'SHWO_BTN_DISABLE'
+      }),
+      ...mapActions({
+        CHANGE_ARTICLELIST: 'CHANGE_ARTICLELIST'
+      }),
       getArticles () {
-        var me = this
         var postData = {
-          page: me.page,
+          page: this.page,
           pageSize: 5,
           status: 2
         }
-        if (!me.nomore) {
-          me.loading = true
-          this.$http.post('/api/article/index', postData).then((response) => {
-            var resData = response.data
-            if (resData.length) {
-              if (resData.length < 5) me.nomore = true
-              if (me.page === 1) {
-                me.articles = resData
-              } else {
-                me.articles = me.articles.concat(resData)
-              }
-              me.page++
-            } else {
-              me.nomore = true
-            }
-            me.loading = false
-          }, (err) => {
-            console.log(err)
-          }
-          )
+
+        if (!this.nomore) {
+          this.SHOW_BTN_LOADING()
+          this.CHANGE_ARTICLELIST(postData)
+            .then(resData => {
+              this.LOADING_COMPONENT_HIDE()
+              this.SHOW_BTN_LOADING()
+              resData.length < 5 && this.SHWO_BTN_DISABLE()
+              this.page++
+            })
+            .catch(err => {
+              console.log(err)
+            })
         }
       },
       markedContent: function (index) {
@@ -80,6 +81,7 @@
       }
     },
     mounted: function () {
+      this.LOADING_COMPONENT_SHOW()
       this.$nextTick(() => {
         this.getArticles()
       })

@@ -20,19 +20,17 @@
   import showdown from 'showdown'
   import hljs from 'highlight.js'
   import CommentComponent from '../components/Comment'
+  import { mapState, mapMutations, mapActions } from 'vuex'
 
   export default{
     data () {
       return {
-        article: {
-          title: '',
-          content: '加载中...',
-          author: '',
-          publishTime: ''
-        },
         hasArticle: true
       }
     },
+    computed: mapState({
+      article: state => state.ARTICLE.article
+    }),
     components: {
       CommentComponent
     },
@@ -42,24 +40,35 @@
       },
       '$route' (to, from) {
         let id = to.params.id
-        id && this.getArticles(Number(id))
+        id && this.getOneArticle(Number(id))
       }
     },
     methods: {
-      getArticles (id) {
+      ...mapMutations({
+        LOADING_COMPONENT_SHOW: 'LOADING_COMPONENT_SHOW',
+        LOADING_COMPONENT_HIDE: 'LOADING_COMPONENT_HIDE'
+      }),
+      ...mapActions({
+        CHANGE_ONE_ARTICLE: 'CHANGE_ONE_ARTICLE'
+      }),
+      getOneArticle (id) {
         var me = this
-        this.$http.post('/api/article/index', {id: id}).then((response) => {
-          var resData = response.data
-          if (resData.length) {
-            me.article = response.data[0]
-            me.changeTitle(me.article)
-            me.changeDescript(me.article)
-          } else {
-            me.hasArticle = false
-          }
-        }, (err) => {
-          console.log(err)
-        })
+        this.LOADING_COMPONENT_SHOW()
+        this.CHANGE_ONE_ARTICLE(id)
+          .then((response) => {
+            this.LOADING_COMPONENT_HIDE()
+            var resData = response
+            if (resData.length) {
+              // me.article = response.data[0]
+              me.changeTitle(me.article)
+              me.changeDescript(me.article)
+            } else {
+              me.hasArticle = false
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
       },
       highlightCodes () {
         var codeEles = document.querySelectorAll('pre code')
@@ -87,7 +96,7 @@
     mounted: function () {
       this.$nextTick(() => {
         let id = this.$route.params.id
-        id && this.getArticles(Number(id))
+        id && this.getOneArticle(Number(id))
       })
     }
   }

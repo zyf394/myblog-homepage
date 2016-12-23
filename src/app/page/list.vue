@@ -3,35 +3,44 @@
   <ul class="blog-list-wrap" v-for="(list, year) in articlesList">
     <h3><i class="iconfont icon-06"></i><span>{{year}}</span></h3>
     <li v-for="item in list">
-      <time>{{item.publishTime.substring(0,10)}}</time> 
+      <time>{{item.publishTime ? item.publishTime.substring(0,10) : ''}}</time> 
       <router-link :to="'/article/' + item.id">{{item.title}}</router-link>
     </li>
   </ul>
 </div>
 </template>
 <script type="text/ecmascript-6">
+  import { mapState, mapMutations, mapActions } from 'vuex'
+
   export default{
-    data () {
-      return {
-        articlesList: []
-      }
-    },
+    computed: mapState({
+      articlesList: state => state.LIST.articlesList
+    }),
     methods: {
-      getArticles () {
+      ...mapMutations({
+        LOADING_COMPONENT_SHOW: 'LOADING_COMPONENT_SHOW',
+        LOADING_COMPONENT_HIDE: 'LOADING_COMPONENT_HIDE'
+      }),
+      ...mapActions({
+        CHANGE_ALL_ARTICLES_LIST: 'CHANGE_ALL_ARTICLES_LIST'
+      }),
+      getAllArticlesList () {
+        this.LOADING_COMPONENT_SHOW()
         var me = this
         var postData = {
           status: 2
         }
-        this.$http.post('/api/article/list', postData).then((response) => {
-          me.articlesList = response.data
-        }, (err) => {
-          console.log(err)
-        }
-        )
+        this.CHANGE_ALL_ARTICLES_LIST(postData)
+          .then((response) => {
+            this.LOADING_COMPONENT_HIDE()
+            me.articlesList = response.data
+          }).catch(err => {
+            console.log(err)
+          })
       }
     },
     mounted () {
-      this.getArticles()
+      this.getAllArticlesList()
     }
   }
 </script>

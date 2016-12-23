@@ -4,11 +4,13 @@
     <i v-on:click="showMenu">&#xe624;</i>
     <h1 v-show="!isIndex">Shuiyi's Blog</h1>
   </nav>
-  <ul v-bind:class="['mobile-nav-list',menuOpen ? '' : 'expand']">
-    <li v-for="item in menu" v-on:click="routeOut">
-      <router-link :to="{ path: item.href }" ><i class="iconfont" v-bind:class="item.icon"></i>{{item.name}}</router-link>
-    </li>
-  </ul>
+  <div v-bind:class="['mobile-nav-list',menuOpen ? '' : 'expand']" v-on:touchmove.prevent>
+    <ul >
+      <li v-for="item in menu" v-on:click="routeOut">
+        <router-link :to="{ path: item.href }" ><i class="iconfont" v-bind:class="item.icon"></i>{{item.name}}</router-link>
+      </li>
+    </ul>
+  </div>
   <nav class="menu" >
     <ul>
       <li v-for="item in menu">
@@ -171,11 +173,10 @@
       top: 3rem;
       flex-flow: column nowrap;
       z-index: 2;
-      width: 50%;
+      width: 100%;
       height: 100%;
-      padding: 0 0.6rem 0.6rem;
 
-      background: #fafafa;
+      background:rgba(0, 0, 0, 0.2);
       box-shadow: none;
 
       transform: translateX(0%);
@@ -193,25 +194,32 @@
       }
 
 
-      li{
-        a{
-          display: block;
-          color: #ccc;
-          padding: 0.8rem 0;
-
-          i{
-            margin-right: 0.5rem;
+      ul{
+        width: 50%;
+        height: 100%;
+        padding: 0 0.6rem 0.6rem;
+        background: #fafafa;
+        li{
+          a{
+            display: block;
             color: #ccc;
+            padding: 0.8rem 0;
+
+            i{
+              margin-right: 0.5rem;
+              color: #ccc;
+            }
+          }
+          &::after{
+            content: '';
+            display: block;
+            height: 1px;
+            transform: scaleY(0.5);
+            background: rgba(204,204,204,0.3);
           }
         }
-        &::after{
-          content: '';
-          display: block;
-          height: 1px;
-          transform: scaleY(0.5);
-          background: rgba(204,204,204,0.3);
-        }
       }
+
     }
 
     .menu{
