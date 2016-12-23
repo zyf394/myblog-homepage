@@ -7,11 +7,13 @@
   <div v-bind:class="['mobile-nav-list',menuOpen ? '' : 'expand']" 
       v-on:touchmove.prevent>
     <ul class="mobile-nav-list-wrap">
-      <li class="js-routeOut" v-for="item in menu">
+      <li class="js-routeOut" 
+          v-for="item in menu"
+          @click="hideMenu">
         <router-link :to="{ path: item.href }" ><i class="iconfont" v-bind:class="item.icon"></i>{{item.name}}</router-link>
       </li>
     </ul>
-    <div class="mobile-nav-list-wall" v-on:click="hideMenu"></div>
+    <div class="mobile-nav-list-wall" @click="hideMenu"></div>
   </div>
   <nav class="menu" >
     <ul>
