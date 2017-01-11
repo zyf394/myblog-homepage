@@ -116,7 +116,7 @@
         this.$http.post('/api/article/del', postData).then((response) => {
           var resData = response.data
           if (resData.errno === 0) {
-            window.router.push('/articles')
+            window.router.push('/articles/')
           }
         }, (err) => {
           console.log(err)
@@ -167,11 +167,11 @@
     mounted: function () {
       let me = this
       let id = me.$route.params.id
-      id && me.getArticles(Number(id))
+      id && me.getArticles(id)
 
       this.$watch('$route.params.id', function (newVal, oldVal) {
         if (newVal) {
-          me.getArticles(Number(newVal))
+          me.getArticles(newVal)
         } else {
           me.article = {
             id: 0,

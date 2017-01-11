@@ -15,13 +15,14 @@
     methods: {
       getArticles: function () {
         var me = this
-        this.$http.post('/api/article/index', {}).then((response) => {
-          me.articles = response.data
-        },
-          (err) => {
-            console.log(err)
-          }
-        )
+        this.$http.post('/api/article/index', {})
+          .then((response) => {
+            me.articles = response.data
+          },
+            (err) => {
+              console.log(err)
+            }
+          )
       }
     },
     mounted: function () {

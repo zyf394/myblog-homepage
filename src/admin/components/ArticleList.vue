@@ -52,6 +52,10 @@
         codes.forEach(block => {
           hljs.highlightBlock(block)
         })
+      },
+      '$route' (to, from) {
+        let id = to.params.id
+        id && this.markedContent()
       }
     },
     methods: {
@@ -67,12 +71,10 @@
       markedContent: function () {
         var me = this
         var html = ''
-        var markedContent
-        if (me.articles[this.$route.params.id - 1]) {
-          markedContent = me.articles[this.$route.params.id - 1].content || ''
-        } else {
-          markedContent = me.articles[0].content || ''
-        }
+        var articleContent = me.articles.filter((item, index) => {
+          return item.id && item.id === me.$route.params.id
+        })[0]
+        var markedContent = articleContent ? articleContent.content : ''
         html += markdown.toHTML(markedContent)
         return html
       }

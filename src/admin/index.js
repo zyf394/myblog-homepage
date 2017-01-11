@@ -1,4 +1,4 @@
-import Vue from 'vue'
+const Vue = window.Vue
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import configRouter from './routes'

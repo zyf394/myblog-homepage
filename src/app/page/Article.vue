@@ -40,7 +40,12 @@
       },
       '$route' (to, from) {
         let id = to.params.id
-        id && this.getOneArticle(Number(id))
+        if (id) {
+          this.getOneArticle(id)
+        } else {
+          this.resetTitle()
+          this.resetDescript()
+        }
       }
     },
     methods: {
@@ -85,9 +90,16 @@
       changeTitle (data) {
         document.title = data.title
       },
+      resetTitle () {
+        document.title = 'Shuiyi’s Blog 水乙的博客'
+      },
       changeDescript (data) {
         let desc = document.querySelector('meta[name="description"]')
         desc.content = data.content.substring(0, 50)
+      },
+      resetDescript () {
+        let desc = document.querySelector('meta[name="description"]')
+        desc.content = '水乙的博客'
       }
     },
     updated () {

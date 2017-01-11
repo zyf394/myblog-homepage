@@ -33,6 +33,9 @@
           document.getElementsByTagName('head')[0].appendChild(ds)
         })()
       })
+    },
+    destroyed () {
+      console.log('destroyed')
     }
   }
 </script>
