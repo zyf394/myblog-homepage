@@ -108,7 +108,7 @@
     mounted: function () {
       this.$nextTick(() => {
         let id = this.$route.params.id
-        id && this.getOneArticle(Number(id))
+        id && this.getOneArticle(id)
       })
     }
   }

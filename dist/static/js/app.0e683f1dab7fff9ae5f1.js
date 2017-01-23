@@ -4426,7 +4426,7 @@ webpackJsonp([2,0],{
 
 	    this.$nextTick(function () {
 	      var id = _this2.$route.params.id;
-	      id && _this2.getOneArticle(Number(id));
+	      id && _this2.getOneArticle(id);
 	    });
 	  }
 	};
