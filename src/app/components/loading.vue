@@ -2,7 +2,6 @@
   <div id="blog-loading" v-show="loading"></div>
 </template>
 <script>
-import Spinner from 'spin.js'
 import { mapState } from 'vuex'
 
 export default {
@@ -10,14 +9,7 @@ export default {
     loading: state => state.loading
   }),
   mounted () {
-    let target = document.getElementById('blog-loading')
-    new Spinner({
-      color: '#fff',
-      lines: 12,
-      length: 0,
-      width: 10,
-      radius: 30
-    }).spin(target)
+    // let target = document.getElementById('blog-loading')
   }
 }
 </script>
