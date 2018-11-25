@@ -1,7 +1,8 @@
 <template>
-  <article-component :articles="articles"></article-component>
+  <article-component :articles="articles" @current-change="currentChange"></article-component>
 </template>
 <script type="text/ecmascript-6">
+  import axios from 'axios'
   import ArticleComponent from '../components/ArticleList.vue'
   export default{
     data () {
@@ -13,9 +14,9 @@
       ArticleComponent
     },
     methods: {
-      getArticles: function () {
+      getArticles: function (query) {
         var me = this
-        this.$http.post('/api/article/index', {})
+        axios.post('/api/article/index', query)
           .then((response) => {
             me.articles = response.data
           },
@@ -23,10 +24,13 @@
               console.log(err)
             }
           )
+      },
+      currentChange: function (page) {
+        this.getArticles({ page: page })
       }
     },
     mounted: function () {
-      this.getArticles()
+      this.getArticles({ page: 1 })
     }
   }
 </script>

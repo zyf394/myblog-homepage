@@ -20,6 +20,13 @@
           </router-link>
         </li>
       </ul>
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :page-size="10"
+        :total="100"
+        @current-change="currentChange">
+      </el-pagination>
     </section>
     <section class="article-content" v-if="$route.params.id">
       <div class="edit-btn iconfont icon-23" v-on:click="jumpToEdit($route.params.id)"></div>
@@ -27,7 +34,6 @@
         <div class="markdown-body" v-html="markedContent()"></div>
       </div>
     </section>
-
   </main>
 </template>
 <script type="text/ecmascript-6">
@@ -37,7 +43,6 @@
   export default{
     props: {
       articles: {
-        type: Array,
         default: [{
           id: 0,
           title: '加载中...',
@@ -77,6 +82,9 @@
         var markedContent = articleContent ? articleContent.content : ''
         html += markdown.toHTML(markedContent)
         return html
+      },
+      currentChange (page) {
+        this.$emit('current-change', page)
       }
     }
   }

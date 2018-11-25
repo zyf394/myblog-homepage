@@ -1,9 +1,13 @@
-const Vue = window.Vue
+import Vue from 'vue'
 import VueRouter from 'vue-router'
 import configRouter from './routes'
 import store from './store'
 import App from './App'
 
+const router = new VueRouter({
+  routes: configRouter,
+  mode: 'history'
+})
 Vue.use(VueRouter)
 
 Vue.filter('formatTime', function (value) {
@@ -12,12 +16,13 @@ Vue.filter('formatTime', function (value) {
   return time ? time[0] : ''
 })
 
-const router = new VueRouter({
-  routes: configRouter,
-  mode: 'history'
+/* eslint-disable no-new */
+new Vue({
+  el: '#root',
+  store,
+  router,
+  template: '<App/>',
+  components: { App }
 })
-
-const MyBlog = Vue.extend(App)
-new MyBlog({router, store}).$mount('#root')
 
 window.router = router

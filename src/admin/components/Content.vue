@@ -36,6 +36,7 @@
 <script type="text/ecmascript-6">
   import showdown from 'showdown'
   import hljs from 'highlight.js'
+  import axios from 'axios'
 
   export default{
     data () {
@@ -79,7 +80,7 @@
       },
       addArticle (postData) {
         var me = this
-        this.$http.post('/api/article/add', postData).then((response) => {
+        axios.post('/api/article/add', postData).then((response) => {
           var resData = response.data
           var article = resData[resData.length - 1]
           me.article = {
@@ -95,7 +96,7 @@
       },
       editArticle (postData) {
         var me = this
-        this.$http.post('/api/article/edit', postData).then((response) => {
+        axios.post('/api/article/edit', postData).then((response) => {
           var resData = response.data
           var article = resData[0]
           me.article = {
@@ -113,7 +114,7 @@
         var postData = {
           id: me.article.id
         }
-        this.$http.post('/api/article/del', postData).then((response) => {
+        axios.post('/api/article/del', postData).then((response) => {
           var resData = response.data
           if (resData.errno === 0) {
             window.router.push('/articles/')
@@ -124,7 +125,7 @@
       },
       getArticles: function (id) {
         var me = this
-        this.$http.post('/api/article/index', {id: id}).then((response) => {
+        axios.post('/api/article/index', {id: id}).then((response) => {
           var article = response.data[0]
           if (!article) return
           me.article = {
@@ -152,7 +153,7 @@
           formData.append('file', file)
         }
         if (files[0]) {
-          this.$http.post('/api/upload', formData).then((response) => {
+          axios.post('/api/upload', formData).then((response) => {
             var resData = response.data
             var imageData = resData[0].data
             var imageName = imageData.name
