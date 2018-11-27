@@ -6981,11 +6981,14 @@ webpackJsonp([2,0],{
 	    staticClass: "blog-list"
 	  }, _vm._l((_vm.articlesList), function(list, year) {
 	    return _c('ul', {
+	      key: year,
 	      staticClass: "blog-list-wrap"
 	    }, [_c('h3', [_c('i', {
 	      staticClass: "iconfont icon-06"
-	    }), _c('span', [_vm._v(_vm._s(year))])]), _vm._v(" "), _vm._l((list), function(item) {
-	      return _c('li', [_c('time', [_vm._v(_vm._s(item.publishTime ? item.publishTime.substring(0, 10) : ''))]), _vm._v(" "), _c('router-link', {
+	    }), _c('span', [_vm._v(_vm._s(year))])]), _vm._v(" "), _vm._l((list), function(item, index) {
+	      return _c('li', {
+	        key: index
+	      }, [_c('time', [_vm._v(_vm._s(item.publishTime ? item.publishTime.substring(0, 10) : ''))]), _vm._v(" "), _c('router-link', {
 	        attrs: {
 	          "to": '/article/' + item.id
 	        }
